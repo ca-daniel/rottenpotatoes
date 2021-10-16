@@ -24,10 +24,12 @@ class MoviesController < ApplicationController
     
     if params[:order] == "title"
       @movies = Movie.all.order('title')
+      @order_title = true
     end
     
     if params[:order] == "release_date"
       @movies = Movie.all.order('release_date')
+      @order_release = true
     end
     
   end

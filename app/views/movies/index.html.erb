@@ -3,12 +3,31 @@
 
 <%#  Part 1: Start here... %>
 
+<%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
+  Include:
+  <% @all_ratings.each do |rating| %>
+    <div class="form-check  form-check-inline">
+      <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
+      <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), class: 'form-check-input' %>
+    </div>
+  <% end %>
+  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
+<% end %>
+
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th><%= link_to "Movie Title", movies_path(order: 'title') %></th>
+      <% if @order_title == true %>
+        <th id = "title_header" class ="hilite p-3 mb-2 bg-warning text-dark"><%= link_to "Movie Title", movies_path(order: 'title') %></th>
+      <% else %>
+        <th><%= link_to "Movie Title", movies_path(order: 'title') %></th>
+      <% end %>
       <th>Rating</th>
-      <th><%= link_to "Release Date", movies_path(order: 'release_date') %></th>
+      <% if @order_release == true %>
+        <th id = "release_date_header" class ="hilite p-3 mb-2 bg-warning text-dark"><%= link_to "Release Date", movies_path(order: 'release_date') %></th>
+      <% else %>
+        <th><%= link_to "Release Date", movies_path(order: 'release_date') %></th>
+      <% end %>
       <th>More Info</th>
     </tr>
   </thead>
@@ -32,14 +51,3 @@
   </tbody>
 </table>
 <%= link_to 'Add new movie', new_movie_path, :class => 'btn btn-primary' %>
-
-<%= form_tag movies_path, method: :get, id: 'ratings_form' do %>
-  Include:
-  <% @all_ratings.each do |rating| %>
-    <div class="form-check  form-check-inline">
-      <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
-      <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), class: 'form-check-input' %>
-    </div>
-  <% end %>
-  <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
-<% end %>
