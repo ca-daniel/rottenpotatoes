@@ -22,6 +22,14 @@ class MoviesController < ApplicationController
       @movies = Movie.where("rating IN (?)", @ratings_to_show)
     end
     
+    if params[:order] == "title"
+      @movies = Movie.all.order('title')
+    end
+    
+    if params[:order] == "release_date"
+      @movies = Movie.all.order('release_date')
+    end
+    
   end
 
   def new
