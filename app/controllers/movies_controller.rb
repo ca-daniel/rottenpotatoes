@@ -22,16 +22,32 @@ class MoviesController < ApplicationController
       @movies = Movie.where("rating IN (?)", @ratings_to_show)
     end
     
+    if session[:current_title]
+      @movies = Movie.all.order('title')
+      session[:current_release] = nil
+    end
+    
+    if session[:current_release]
+      @movies = Movie.all.order('release_date')
+      session[:current_title] = nil
+    end
+    
+    
     if params[:order] == "title"
       @movies = Movie.all.order('title')
       @order_title = true
+      session[:current_title] = true
+      session[:current_release] = nil
     end
     
     if params[:order] == "release_date"
       @movies = Movie.all.order('release_date')
       @order_release = true
+      session[:current_release] = true
+      session[:current_title] = nil
     end
     
+
   end
 
   def new
