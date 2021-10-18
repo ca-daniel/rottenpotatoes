@@ -9,43 +9,44 @@ class MoviesController < ApplicationController
   def index
      
     @all_ratings = Movie.all_ratings
+
     
     if params[:ratings].nil?
       @ratings_to_show = @all_ratings
-    else
-      @ratings_to_show = params[:ratings].keys
-    end
-    
-    if params[:ratings].nil?
       @movies = Movie.all
     else
+      @ratings_to_show = params[:ratings].keys
       @movies = Movie.where("rating IN (?)", @ratings_to_show)
     end
     
+
     if session[:current_title]
-      @movies = Movie.all.order('title')
+      @movies = Movie.where("rating IN (?)", @ratings_to_show).order('title')
       session[:current_release] = nil
     end
     
     if session[:current_release]
-      @movies = Movie.all.order('release_date')
+      @movies = Movie.where("rating IN (?)", @ratings_to_show).order('release_date')
       session[:current_title] = nil
     end
     
     
     if params[:order] == "title"
-      @movies = Movie.all.order('title')
+      @movies = Movie.where("rating IN (?)", @ratings_to_show).order('title')
       @order_title = true
       session[:current_title] = true
       session[:current_release] = nil
     end
     
     if params[:order] == "release_date"
-      @movies = Movie.all.order('release_date')
+      @movies = Movie.where("rating IN (?)", @ratings_to_show).order('release_date')
       @order_release = true
       session[:current_release] = true
       session[:current_title] = nil
     end
+    
+    
+    
     
 
   end

@@ -18,15 +18,15 @@
   <thead>
     <tr>
       <% if @order_title == true or session[:current_title] %>
-        <th id = "title_header" class ="hilite p-3 mb-2 bg-warning text-dark"><%= link_to "Movie Title", movies_path(order: 'title') %></th>
+        <th id = "title_header" class ="hilite p-3 mb-2 bg-warning text-dark"><%= link_to "Movie Title", movies_path(order: 'title', ratings: @ratings_to_show.map{|k|[k,1]}.to_h) %></th>
       <% else %>
-        <th id = "title_header"><%= link_to "Movie Title", movies_path(order: 'title') %></th>
+        <th id = "title_header"><%= link_to "Movie Title", movies_path(order: 'title', ratings: @ratings_to_show.map{|k|[k,1]}.to_h) %></th>
       <% end %>
       <th>Rating</th>
       <% if @order_release == true or session[:current_release] %>
-        <th id = "release_date_header" class ="hilite p-3 mb-2 bg-warning text-dark"><%= link_to "Release Date", movies_path(order: 'release_date') %></th>
+        <th id = "release_date_header" class ="hilite p-3 mb-2 bg-warning text-dark"><%= link_to "Release Date", movies_path(order: 'release_date', ratings: @ratings_to_show.map{|k|[k,1]}.to_h) %></th>
       <% else %>
-        <th id = "release_date_header"><%= link_to "Release Date", movies_path(order: 'release_date') %></th>
+        <th id = "release_date_header"><%= link_to "Release Date", movies_path(order: 'release_date', ratings: @ratings_to_show.map{|k|[k,1]}.to_h) %></th>
       <% end %>
       <th>More Info</th>
     </tr>
